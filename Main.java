@@ -22,6 +22,32 @@ public class Main {
         System.out.println("Encrypt: "+encrypt);
         String decrypt = decrypt(encrypt, keyCipher);
         System.out.println("Decrypt: "+decrypt);
+
+        System.out.println("---------------------");
+
+        //VietNamese
+        String text = "”Tất cả nick ảo, nick clone k rõ danh tính, nick mới tham gia chợ không được tham gia bid.”\n" +
+                "------------------------------\n" +
+                "Bid dọn tủuuu\n" +
+                "Sản phẩm: 90sw Cherry Blossom và 90sw Geon Black\n" +
+                "Tình trạng: \n" +
+                "-Cherry Blossom đã lube và thay lò xo payson 2stage 62g bởi chủ cũ, 84 rã hàn cắm hs bth, 6 chưa dùng. \n" +
+                "-Geon Black đã lube và thay lò xo tx long 60g bởi c NTN, 84 rã hàn cắm hs bth, 6 chưa dùng. \n" +
+                "---------------------------------\n" +
+                "Giá khởi điểm: 0 đồng\n" +
+                "Bước giá: bội 10k, nhảy tự do\n" +
+                "Giá mua ngay: 1200k (free ship)\n" +
+                "End : 22h30 ngày 30/09/2023 (22h31 không tính)\n" +
+                "---------------------------------\n" +
+                "Winner vui lòng thanh toán trong 24h kể từ khi win bid và phí ship nếu có.\n" +
+                "Nếu có tranh chấp nhờ admin xử lý.";
+        int key = 24;
+        System.out.println("TextVie: "+text);
+        System.out.println("Key: "+key);
+        String encryptVie = encryptVietnamese(key, text);
+        System.out.println("EncryptVie: "+encryptVie);
+        String decryptVie = decryptVietnamese(key, encryptVie);
+        System.out.println("DecryptVie: "+decryptVie);
     }
 
     //Encrypt
@@ -99,5 +125,21 @@ public class Main {
             else plainText.append(character);
         }
         return plainText.toString();
+    }
+    public static final String VIETNAMESE_APHABET = "aáàạảãăắằặẳẵâấầậẩẫbcdđeéèẹẻẽêếềệểễghiíìịỉĩklmnoóòọỏõôốồộổỗơớờợởỡpqrstuúùụủũưứừựửữvxyýỳỵỷỹAÁÀẠẢÃĂẮẰẶẲẴÂẤẦẬẨẪBCDĐEÉÈẸẺẼÊẾỀỆỂỄGHIÍÌỊỈĨKLMNOÓÒỌỎÕÔỐỒỘỔỖƠỚỜỢỞỠPQRSTUVXYÝỲỴỶỸ"
+    //VietNamese
+    public static String encryptVietnamese(int key, String data){
+        StringBuilder stringBuilder = new StringBuilder();
+        for(Character character : data.toCharArray()){
+            int index = VIETNAMESE_APHABET.indexOf(character);
+            if(index!=-1){
+                stringBuilder.append(VIETNAMESE_APHABET.charAt(index+VIETNAMESE_APHABET.length()+key)%VIETNAMESE_APHABET.length());
+            }
+            else stringBuilder.append(character);
+        }
+        return stringBuilder.toString();
+    }
+    public static String decryptVietnamese(int key, String data){
+        return encrypt(-key, data);
     }
 }
